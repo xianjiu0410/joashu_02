@@ -1,0 +1,101 @@
+/* ============ 回声回信区 ============ */
+.wall-row{display:flex;gap:12px;margin-bottom:12px}
+.wall-row select,.wall-row input{
+  border:1px solid var(--line);border-radius:4px;background:var(--paper);
+  padding:11px 13px;font-family:inherit;font-size:14.5px;color:var(--ink);
+}
+.wall-row select{flex:1.2;cursor:pointer}
+.wall-row input{flex:1}
+.wall-row select:focus,.wall-row input:focus{outline:none;border-color:var(--gold)}
+
+.echo-box{
+  background:linear-gradient(160deg,#fffdf6,#f9f1e2);
+  border:1.5px solid var(--red);border-radius:6px;
+  padding:26px 28px 22px;margin-bottom:32px;position:relative;
+  box-shadow:0 6px 24px rgba(166,43,37,.14);
+  animation:echoin .5s ease;
+}
+@keyframes echoin{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.echo-box::before{
+  content:"";position:absolute;inset:6px;border:1px dashed rgba(166,43,37,.35);border-radius:4px;pointer-events:none;
+}
+.echo-head{display:flex;gap:14px;align-items:center;margin-bottom:16px}
+.echo-seal{
+  width:46px;height:46px;background:var(--red);color:#fff;font-size:24px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;border-radius:6px;transform:rotate(-5deg);
+  box-shadow:0 3px 8px rgba(166,43,37,.4);flex:none;font-family:"Songti SC",serif;
+}
+.echo-from{font-size:16.5px;font-weight:700;color:var(--ink);letter-spacing:2px}
+.echo-disclaimer{font-size:10.5px;color:var(--gold);margin-top:3px;letter-spacing:.5px}
+.echo-text{
+  font-size:15.5px;line-height:2.1;color:#4a443b;position:relative;z-index:1;
+  padding:6px 2px 4px;
+}
+.echo-text::first-letter{font-size:1.15em}
+.echo-actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+.btn-small{padding:9px 22px;font-size:13.5px;letter-spacing:2px}
+
+/* ============ 中国红按键改造 ============ */
+/* 播放键：五角星印章风 */
+.play-btn{
+  width:40px;height:40px;border-radius:8px;
+  background:linear-gradient(150deg,#c2352c,var(--red) 55%,var(--red-deep));
+  color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;
+  flex:none;transition:.2s;position:relative;
+  box-shadow:0 3px 10px rgba(166,43,37,.45),inset 0 1px 0 rgba(255,255,255,.25);
+  border:1px solid var(--red-deep);
+  transform:rotate(-2deg);
+}
+.play-btn::after{
+  content:"★";position:absolute;bottom:-7px;right:-6px;font-size:9px;color:var(--gold);
+  text-shadow:0 1px 2px rgba(0,0,0,.15);
+}
+.play-btn:hover{background:var(--red-deep);transform:rotate(-2deg) scale(1.06)}
+.play-btn:active{transform:rotate(-2deg) scale(.96)}
+/* 进度条：红旗渐变 */
+.progress{background:#e6ddd0;border:1px solid rgba(166,43,37,.18)}
+.progress-fill{background:linear-gradient(90deg,#e0554b,var(--red) 60%,var(--red-deep))}
+/* 语速/重播：朱红描边 */
+.rate-btn{border-color:rgba(166,43,37,.45);color:var(--red)}
+.rate-btn:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.restart-btn{color:var(--red);border:1px solid rgba(166,43,37,.45);border-radius:8px}
+.restart-btn:hover{background:var(--red);color:#fff}
+/* 播放器外壳：描红金边 */
+.player{border-color:rgba(176,141,79,.5);background:linear-gradient(180deg,#fff,#fffdf6)}
+.player::before{
+  content:"";position:absolute;left:14px;right:14px;top:-1px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:2px;
+}
+/* 按钮星标（主 CTA 底部五角星点缀） */
+.btn-primary{position:relative}
+.btn-primary::after{
+  content:"★ ★";position:absolute;left:50%;transform:translateX(-50%);
+  bottom:-17px;font-size:8px;color:rgba(166,43,37,.55);letter-spacing:6px;
+}
+/* 卡片墙 NO 徽章：印章感 */
+.letter-card .no{
+  border:1px solid rgba(166,43,37,.5);color:var(--red);
+  padding:2px 7px;border-radius:3px;background:rgba(166,43,37,.05);
+}
+/* 导航激活：红星下划线 */
+.nav a.active{position:relative}
+.nav a.active::after{
+  content:"★";position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);
+  font-size:7px;color:var(--red);
+}
+/* 弹注关闭键 */
+.anno-close{color:var(--red)}
+
+/* 回信墙卡片：回声块 */
+.wc-echo{
+  margin-top:12px;padding:12px 12px 10px;border-top:1px dashed rgba(166,43,37,.45);
+  font-size:13.5px;line-height:1.9;color:#5b3a35;background:rgba(166,43,37,.05);
+  border-radius:0 0 4px 4px;
+}
+.wc-echo-seal{
+  display:inline-flex;width:22px;height:22px;background:var(--red);color:#fff;
+  font-size:13px;align-items:center;justify-content:center;border-radius:3px;
+  margin-right:7px;transform:rotate(-4deg);vertical-align:-5px;font-family:"Songti SC",serif;
+}
+.wc-echo-note{font-size:9.5px;color:var(--gold);margin-top:7px;letter-spacing:.5px}
+.page-sub .red{color:var(--red)}

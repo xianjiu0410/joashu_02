@@ -1,0 +1,473 @@
+/* ============================================================
+   《家书·回声》双主题层 themes.css
+   - 省份徽章（每封家书）
+   - 水墨主题（默认）背景丰富化：远山底纹 + 各视图晕染
+   - 中国红主题：长城·五星红旗·祥云华表
+   加载顺序：style.css → extra.css → visuals.css → themes.css
+   ============================================================ */
+
+/* ---------- 省份徽章（每封家书） ---------- */
+.letter-card .lc-badge{
+  position:absolute;top:12px;left:12px;z-index:2;
+  background:rgba(166,43,37,.92);color:#fffdf6;
+  font-family:var(--font-ui);font-size:10.5px;letter-spacing:2px;
+  padding:3px 9px;border-radius:2px;white-space:nowrap;
+  box-shadow:0 3px 10px rgba(43,39,36,.32);
+}
+.letter-card .lc-badge.qinghai{
+  background:linear-gradient(150deg,#c2352c,var(--red) 55%,var(--red-deep));
+  border:1px solid rgba(212,175,105,.85);
+  box-shadow:0 3px 12px rgba(166,43,37,.5);
+}
+.side-prov{
+  display:inline-block;margin-top:8px;
+  color:var(--red);font-family:var(--font-ui);letter-spacing:2px;font-size:12px;
+  border:1px solid rgba(166,43,37,.35);padding:2px 10px;border-radius:2px;
+  background:rgba(166,43,37,.06);
+}
+
+/* ---------- 主题切换器（已随水墨主题移除） ---------- */
+
+/* ============================================================
+   水墨主题（默认）—— 背景丰富化
+   ============================================================ */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:url("../images/aigc/mountains.jpg") center bottom / cover no-repeat;
+  opacity:.45;
+}
+#view-letters{background:radial-gradient(ellipse 62% 42% at 88% -4%,rgba(176,141,79,.12),transparent 62%)}
+#view-wall{background:radial-gradient(ellipse 58% 38% at 6% 2%,rgba(166,43,37,.08),transparent 62%)}
+#view-about{background:radial-gradient(ellipse 52% 36% at 92% 102%,rgba(176,141,79,.10),transparent 62%)}
+
+/* ============================================================
+   中国红主题 —— 长城 · 五星红旗 · 祥云华表
+   ============================================================ */
+body[data-theme="red"]{
+  background-color:#7a1a16;
+  background-image:
+    linear-gradient(rgba(112,24,20,.88),rgba(112,24,20,.88)),
+    url("../images/aigc/red-pattern.jpg");
+  background-size:auto,420px;
+}
+body[data-theme="red"]::before{display:none}
+body[data-theme="red"] #view-letters,
+body[data-theme="red"] #view-wall,
+body[data-theme="red"] #view-about{
+  background:radial-gradient(ellipse 60% 40% at 50% -2%,rgba(231,201,142,.10),transparent 65%);
+}
+
+/* 顶栏 */
+body[data-theme="red"] #site-header{background:rgba(94,19,15,.92);border-bottom:none}
+body[data-theme="red"] #site-header::after{
+  background:linear-gradient(90deg,transparent 4%,#e7c98d 22%,#f3e2c2 50%,#e7c98d 78%,transparent 96%);
+  opacity:.7;
+}
+body[data-theme="red"] .logo{color:#f7ead2}
+body[data-theme="red"] .logo .dot{-webkit-text-fill-color:#ff7a68}
+body[data-theme="red"] .nav a{color:rgba(247,234,210,.85)}
+body[data-theme="red"] .nav a:hover,body[data-theme="red"] .nav a.active{color:#ffe9c0;border-color:#e7c98d}
+body[data-theme="red"] .nav a.active::after{color:#e7c98d}
+body[data-theme="red"] .menu-btn{color:#f7ead2}
+body[data-theme="red"] .mobile-nav{background:rgba(94,19,15,.97)}
+body[data-theme="red"] .mobile-nav a{color:#f7ead2;border-color:rgba(231,201,142,.28)}
+
+/* 标题 */
+body[data-theme="red"] .page-head h2{
+  background:none;color:#e7c98d;
+  text-shadow:0 2px 12px rgba(0,0,0,.3);
+}
+body[data-theme="red"] .page-head h2::before{
+  background:linear-gradient(180deg,#e7c98d,#c9a25e);
+  box-shadow:0 2px 10px rgba(231,201,142,.4);
+}
+body[data-theme="red"] .page-sub{color:rgba(247,234,210,.7)}
+body[data-theme="red"] .page-sub .red{color:#ff8d80}
+
+/* 筛选按钮 */
+body[data-theme="red"] .filters button{
+  background:rgba(255,243,220,.10);border-color:rgba(231,201,142,.45);color:#f0d9a8;
+}
+body[data-theme="red"] .filters button:hover{border-color:#e7c98d;color:#ffe9c0}
+body[data-theme="red"] .filters button.on{
+  background:linear-gradient(150deg,#e7c98d,#c9a25e);border-color:#e7c98d;color:#4a1411;
+}
+
+/* 按钮 */
+body[data-theme="red"] .btn-primary{
+  background:linear-gradient(160deg,#eed3a0,#c9a25e 55%,#a9823f);
+  color:#4a1411;border-color:rgba(122,78,22,.55);font-weight:700;
+  box-shadow:0 6px 18px rgba(40,10,8,.35),inset 0 1px 0 rgba(255,255,255,.4);
+}
+body[data-theme="red"] .btn-primary:hover{background:linear-gradient(160deg,#f3ddb2,#d4ae6b);color:#3c100c}
+body[data-theme="red"] .btn-primary::after{color:rgba(231,201,142,.65)}
+body[data-theme="red"] .btn-ghost{
+  color:#f0d9a8;border-color:rgba(231,201,142,.7);background:rgba(255,255,255,.06);
+}
+body[data-theme="red"] .btn-ghost:hover{background:#e7c98d;color:#4a1411}
+
+/* 阅读页头部 / 翻页（坐在红底上的文字） */
+body[data-theme="red"] .reader-meta h2{color:#f7ead2;background:none;-webkit-text-fill-color:#f7ead2}
+body[data-theme="red"] .reader-meta p{color:rgba(247,234,210,.72)}
+body[data-theme="red"] .reader-meta .no{color:#e7c98d}
+body[data-theme="red"] .pager-link{color:rgba(247,234,210,.82)}
+body[data-theme="red"] .pager-link:hover{color:#ffe9c0}
+body[data-theme="red"] .pager-mid{color:rgba(247,234,210,.58)}
+body[data-theme="red"] .reader-pager{border-top-color:rgba(231,201,142,.35)}
+
+/* 回信墙空态 */
+body[data-theme="red"] .wall-empty{
+  color:#f0d9a8;border-color:rgba(231,201,142,.5);background:rgba(255,243,220,.08);
+}
+
+/* 序厅 · 长城主视觉 */
+body[data-theme="red"] .landing-bg{
+  background:
+    linear-gradient(180deg,rgba(52,10,8,.58),rgba(84,18,14,.32) 42%,rgba(44,8,6,.74)),
+    url("../images/aigc/greatwall.jpg") center 42% / cover no-repeat #3a0f0c;
+}
+body[data-theme="red"] .landing-title,
+body[data-theme="red"] .landing-title .ch{
+  background:none;color:#f3e2c2;-webkit-text-fill-color:#f3e2c2;
+  text-shadow:0 1px 0 rgba(40,18,6,.8),0 2px 4px rgba(30,12,5,.75),0 8px 28px rgba(0,0,0,.65),0 0 40px rgba(231,201,142,.32);
+}
+body[data-theme="red"] .landing-title .thin,
+body[data-theme="red"] .landing-title .thin.ch{
+  background:none;-webkit-text-fill-color:#ff8a76;color:#ff8a76;
+}
+body[data-theme="red"] .landing-seal{
+  border-color:rgba(255,201,150,.92);color:#ffe9c0;background:rgba(196,44,32,.4);
+  box-shadow:0 0 0 4px rgba(231,201,142,.18),0 8px 30px rgba(0,0,0,.45),inset 0 0 18px rgba(255,160,120,.35);
+}
+body[data-theme="red"] .landing-quote{color:#ffd9a2}
+body[data-theme="red"] .landing-side{color:rgba(255,233,200,.42)}
+body[data-theme="red"] .landing-sub b{color:#ffd9a2}
+
+/* ============================================================
+   中国红主题 · 内页丰富化（长城线稿背景 / 鎏金边饰）
+   ============================================================ */
+body[data-theme="red"]{
+  background-color:#7a1a16;
+  background-image:
+    linear-gradient(rgba(108,22,18,.66),rgba(108,22,18,.66)),
+    url("../images/aigc/red-greatwall-bg.jpg");
+  background-size:auto,cover;
+  background-attachment:scroll,fixed;
+  background-position:center,center bottom;
+  background-repeat:no-repeat,no-repeat;
+}
+/* 鎏金边饰：卡片 / 信纸 / 表单 / 侧栏 */
+body[data-theme="red"] .letter-card{
+  border-color:rgba(212,175,105,.55);
+  box-shadow:0 3px 10px rgba(30,6,5,.28),0 18px 38px rgba(30,6,5,.34);
+}
+body[data-theme="red"] .letter-card:hover{
+  border-color:#e7c98d;
+  box-shadow:0 18px 44px rgba(20,4,3,.52);
+}
+body[data-theme="red"] .letter-paper,
+body[data-theme="red"] .wall-form,
+body[data-theme="red"] .wall-card,
+body[data-theme="red"] .reader-side,
+body[data-theme="red"] .about-body{
+  border:1px solid rgba(212,175,105,.5);
+  box-shadow:0 3px 10px rgba(30,6,5,.25),0 18px 40px rgba(30,6,5,.3);
+}
+body[data-theme="red"] .echo-box{
+  border-color:#e7c98d;
+  box-shadow:0 10px 36px rgba(30,6,5,.36),inset 0 0 50px rgba(176,141,79,.14);
+}
+body[data-theme="red"] .letter-card .lc-badge{box-shadow:0 3px 12px rgba(30,6,5,.42)}
+
+/* ============================================================
+   时间轴 · 家书年表
+   ============================================================ */
+.timeline{position:relative;max-width:880px;margin:6px auto 0;padding-left:118px}
+.timeline::before{
+  content:"";position:absolute;left:88px;top:8px;bottom:8px;width:3px;border-radius:2px;
+  background:linear-gradient(180deg,rgba(231,201,142,.12),#e7c98d 6%,#e7c98d 94%,rgba(231,201,142,.12));
+  box-shadow:0 0 16px rgba(231,201,142,.4);
+}
+.tl-item{position:relative;margin-bottom:26px}
+.tl-year{
+  position:absolute;left:-118px;top:6px;width:74px;text-align:right;
+  font-family:var(--font-ui);font-size:20px;font-weight:700;color:#e7c98d;letter-spacing:1px;
+  text-shadow:0 2px 10px rgba(0,0,0,.35);
+}
+.tl-dot{
+  position:absolute;left:-36px;top:12px;width:14px;height:14px;border-radius:50%;
+  background:radial-gradient(circle at 35% 32%,#ffe9c0,#c9a25e);
+  border:2px solid rgba(255,243,220,.9);box-shadow:0 0 14px rgba(231,201,142,.65);
+}
+.tl-card{
+  background:#fffdf8;border:1px solid rgba(212,175,105,.55);border-radius:6px;
+  padding:18px 20px 16px;cursor:pointer;transition:.28s;
+  box-shadow:0 10px 28px rgba(30,6,5,.32);
+}
+.tl-card:hover{
+  transform:translateY(-4px);border-color:#e7c98d;
+  box-shadow:0 18px 40px rgba(20,4,3,.5);
+}
+.tl-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.tl-head b{font-size:21px;letter-spacing:2px;color:#2b2724}
+.tl-prov{
+  font-family:var(--font-ui);font-size:10.5px;letter-spacing:2px;color:#fffdf6;
+  background:rgba(166,43,37,.92);padding:3px 9px;border-radius:2px;
+}
+.tl-title{margin-top:8px;font-size:15.5px;letter-spacing:1px;color:#7d1d19;font-weight:700}
+.tl-date{margin-top:4px;font-family:var(--font-ui);font-size:12px;letter-spacing:1px;color:#8a8378}
+.tl-excerpt{
+  margin-top:10px;font-size:13.5px;line-height:1.9;color:#544d43;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.tl-link{
+  display:inline-block;margin-top:10px;font-family:var(--font-ui);
+  font-size:12px;letter-spacing:2px;color:var(--red);transition:.25s;
+}
+.tl-card:hover .tl-link{letter-spacing:3px;color:var(--red-deep)}
+
+/* ============================================================
+   背景音乐开关 / 过场动画 / 已读联动 / 继续阅读
+   ============================================================ */
+.bgm-toggle{
+  position:fixed;right:18px;bottom:22px;z-index:120;
+  width:46px;height:46px;border-radius:50%;
+  background:rgba(255,253,246,.9);border:1px solid rgba(176,141,79,.6);
+  color:var(--red);font-size:19px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 22px rgba(30,6,5,.32);transition:.25s;
+}
+.bgm-toggle:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(30,6,5,.4)}
+.bgm-toggle.muted{color:#b7ad9d;opacity:.85}
+.bgm-toggle.muted::after{
+  content:"";position:absolute;left:9px;right:9px;top:50%;height:2px;
+  background:#a62b25;transform:rotate(-38deg);border-radius:2px;
+}
+
+/* 视图过场 */
+@keyframes viewIn{
+  from{opacity:0;transform:translateY(22px) scale(.992);filter:blur(6px)}
+  to{opacity:1;transform:none;filter:blur(0)}
+}
+.view:not(.hidden){animation:viewIn .55s cubic-bezier(.2,.72,.25,1) both}
+#route-flash{
+  position:fixed;left:0;top:0;height:3px;width:100%;z-index:200;pointer-events:none;
+  background:linear-gradient(90deg,transparent,#e7c98d,#fff3dc,#e7c98d,transparent);
+  transform:scaleX(0);transform-origin:left;opacity:0;
+}
+#route-flash.go{animation:flashBar .7s ease both}
+@keyframes flashBar{
+  0%{transform:scaleX(0);opacity:1}
+  70%{transform:scaleX(1);opacity:1}
+  100%{transform:scaleX(1);opacity:0}
+}
+
+/* 时间轴已读节点 */
+.tl-dot.read{
+  background:radial-gradient(circle at 35% 32%,#fff3dc,#e7c98d);
+  box-shadow:0 0 18px rgba(231,201,142,.95);
+}
+.tl-card.read{border-color:rgba(212,175,105,.85)}
+.tl-card.read::after{
+  content:"✓ 已读";position:absolute;top:14px;right:16px;
+  font-family:var(--font-ui);font-size:10px;letter-spacing:2px;color:#a9823f;
+}
+.tl-card{position:relative}
+
+/* ============================================================
+   纪念日唤醒 / 参观足迹纪念卡 / 回信墙瀑布流
+   ============================================================ */
+.anniv-bar{
+  display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;
+  margin:0 auto 24px;padding:10px 20px;border-radius:24px;cursor:pointer;
+  background:rgba(166,43,37,.38);border:1px solid rgba(231,201,142,.55);
+  color:#ffe9c0;font-family:var(--font-ui);font-size:12px;letter-spacing:2px;line-height:1.8;
+  backdrop-filter:blur(3px);transition:.25s;
+  box-shadow:0 6px 22px rgba(0,0,0,.28);
+}
+.anniv-bar:hover{background:rgba(166,43,37,.55);transform:translateY(-1px)}
+.anniv-dot{
+  width:7px;height:7px;border-radius:50%;background:#e7c98d;flex:none;
+  box-shadow:0 0 12px #e7c98d;animation:annivPulse 2s ease-in-out infinite;
+}
+@keyframes annivPulse{0%,100%{opacity:1}50%{opacity:.3}}
+.anniv-go{color:#ffd9a2;border-bottom:1px dashed rgba(255,217,162,.6);padding-bottom:1px}
+
+.visit-\boxed{
+  max-width:560px;margin:38px auto 0;padding:24px 26px;border-radius:8px;
+  background:rgba(255,243,220,.08);border:1px solid rgba(231,201,142,.42);
+}
+.visit-title{
+  font-family:var(--font-ui);letter-spacing:4px;color:#e7c98d;font-size:14px;margin-bottom:12px;
+}
+.visit-stats{
+  color:#f0d9a8;font-family:var(--font-ui);font-size:13.5px;line-height:2.2;letter-spacing:1.5px;
+}
+.visit-stats b{color:#ffe9c0;font-size:17px}
+.visit-btn{margin-top:16px}
+
+/* 回信墙瀑布流（宽屏） */
+@media(min-width:760px){
+  .wall-grid{column-count:2;column-gap:20px}
+  .wall-card{break-inside:avoid;display:inline-block;width:100%;margin-bottom:20px}
+}
+
+/* ============================================================
+   内容增强：今读 / 落笔之后 / 信件档案 / 时代事件线 / 策展前言
+   ============================================================ */
+.modern-read{
+  background:rgba(176,141,79,.12);border-left:3px solid var(--gold);
+  padding:14px 17px;border-radius:0 4px 4px 0;margin:2px 0 28px;
+  font-size:14.5px;line-height:1.95;color:#5b544a;
+}
+.mr-tag{
+  display:inline-block;font-family:var(--font-ui);font-size:10.5px;letter-spacing:2px;
+  color:#fffdf6;background:var(--gold);padding:2px 9px;border-radius:2px;
+  margin-right:9px;vertical-align:2px;
+}
+.fate-bar{
+  margin:28px 0 8px;padding:13px 17px;border-radius:4px;
+  background:linear-gradient(135deg,rgba(166,43,37,.94),rgba(125,29,25,.94));
+  color:#f7ead2;font-family:var(--font-ui);font-size:13px;line-height:1.95;letter-spacing:.5px;
+  box-shadow:0 6px 18px rgba(166,43,37,.3);
+}
+.archive-line{margin:4px 0}
+.archive-line b{color:#7d1d19;font-family:var(--font-ui);letter-spacing:1px;font-size:12px}
+.related-link{
+  color:var(--red);border-bottom:1px dashed rgba(166,43,37,.5);
+  font-family:var(--font-ui);letter-spacing:1px;font-size:13px;
+}
+.related-link:hover{color:var(--red-deep)}
+.landing-preface{
+  margin-top:16px;font-family:var(--font-ui);font-size:13px;line-height:2.1;
+  letter-spacing:2px;color:rgba(247,234,210,.68);
+  text-shadow:0 1px 3px rgba(20,10,5,.85);
+}
+
+/* 时间轴 · 时代事件节点 */
+.tl-item.event .tl-dot{
+  width:9px;height:9px;top:15px;border-width:1px;
+  background:radial-gradient(circle at 35% 32%,#fff3dc,#c9a25e);
+}
+.tl-item.event .tl-year{font-size:15px;color:rgba(231,201,142,.72);top:9px}
+.tl-event{
+  font-family:var(--font-ui);font-size:12.5px;letter-spacing:1.5px;line-height:1.8;
+  color:rgba(240,217,168,.85);padding:5px 2px;
+}
+.tl-event b{color:#e7c98d;margin-right:12px;font-size:14px;letter-spacing:1px}
+.tl-item.event{margin-bottom:16px}
+
+/* ============================================================
+   示例留言角标 */
+.wall-card.seed{opacity:.96}
+.wc-seed{
+  position:absolute;top:10px;right:12px;
+  font-family:var(--font-ui);font-size:9.5px;letter-spacing:2px;color:#a9823f;
+  border:1px solid rgba(176,141,79,.55);border-radius:2px;padding:1px 7px;
+  background:rgba(176,141,79,.08);
+}
+
+/* 继续上次阅读 */
+.resume-bar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  font-family:var(--font-ui);font-size:12.5px;letter-spacing:1.5px;
+  color:#f0d9a8;background:rgba(231,201,142,.12);
+  border:1px solid rgba(231,201,142,.4);border-radius:6px;
+  padding:9px 16px;margin:0 0 18px;cursor:pointer;transition:.25s;
+}
+.resume-bar:hover{background:rgba(231,201,142,.2)}
+.resume-bar b{color:#ffe9c0}
+.resume-bar .go{margin-left:auto;color:#e7c98d}
+
+@media(max-width:640px){.bgm-toggle{right:12px;bottom:14px;width:42px;height:42px}}
+
+/* ============================================================
+   移动端适配修复
+   ============================================================ */
+html,body{overflow-x:hidden}
+.landing-content::before{inset:-40px -24px}
+
+@media(max-width:480px){
+  .landing-title{font-size:38px;letter-spacing:8px;text-indent:8px}
+  .landing-quote{letter-spacing:3px}
+  .landing-quote::before,.landing-quote::after{width:18px;margin:0 8px}
+  .landing-sub{letter-spacing:2px;font-size:12px}
+  #enter-btn{padding:13px 34px;font-size:15px;letter-spacing:5px}
+  .landing-content{padding:32px 14px}
+}
+@media(max-width:640px){
+  .view{padding:24px 14px 60px}
+  .page-head h2{font-size:21px;letter-spacing:2px;padding-left:12px}
+  .page-head h2::before{width:4px}
+  .page-sub{margin-bottom:12px}
+  .tour-hint{font-size:11.5px;letter-spacing:.5px;padding:9px 12px;line-height:1.9}
+
+  /* 播放器：收敛空间，隐藏引擎角标 */
+  .player{left:14px;right:14px;bottom:12px;gap:8px;padding:8px 10px}
+  .engine-badge{display:none}
+  .play-btn{width:38px;height:38px}
+  .rate-btn,.restart-btn{padding:3px 8px}
+  .time{font-size:10px}
+
+  /* 阅读页 */
+  .reader-meta h2{font-size:22px}
+  .letter-paper{padding:22px 15px 72px}
+  .letter-paper::before{left:18px}
+  .letter-paper::after{width:48px;height:48px;opacity:.12}
+  .sent{font-size:15.5px;line-height:2}
+
+  /* 回信墙：表单竖排 */
+  .wall-row{flex-direction:column;gap:10px}
+  .wall-row select,.wall-row input{width:100%}
+  .wall-form{padding:16px 14px}
+  .echo-box{padding:20px 16px 18px}
+  .echo-box::after{width:58px;height:58px;opacity:.22;top:12px;right:12px}
+
+  /* 关于页表格：压缩并允许断行 */
+  .about-body{padding:20px 16px}
+  .about-body table{table-layout:fixed;word-break:break-all}
+  .about-body th{font-size:11px;padding:7px 6px;letter-spacing:1px}
+  .about-body td{font-size:11px;padding:7px 6px;line-height:1.7}
+
+  /* 时间轴 */
+  .tl-card{padding:14px 15px 12px}
+  .tl-head{gap:8px}
+  .tl-head b{font-size:17px}
+  .tl-title{font-size:14px}
+  .tl-excerpt{font-size:12.5px;line-height:1.8}
+  .tl-card.read::after{position:static;display:inline-block;margin:8px 0 0}
+
+  /* 尾声 */
+  .epilogue-inner h2{letter-spacing:3px}
+  .epilogue-line{letter-spacing:3px}
+  .epilogue-credit{letter-spacing:1.5px;font-size:11.5px}
+  .landing-foot{padding:0 64px;font-size:10px;line-height:1.9}
+
+  /* 按钮 */
+  .btn-primary{padding:12px 28px;font-size:14px;letter-spacing:4px}
+  .btn-primary::after{display:none}
+  .btn-ghost{padding:11px 24px;font-size:13.5px;letter-spacing:2px}
+}
+.tour-hint{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font-family:var(--font-ui);font-size:12.5px;letter-spacing:1.5px;
+  color:#f0d9a8;background:rgba(255,243,220,.09);
+  border:1px dashed rgba(231,201,142,.5);border-radius:6px;
+  padding:10px 16px;margin:-8px 0 22px;
+}
+.tour-hint .anno-demo{
+  color:#ff9d84;border-bottom:2px dotted #ff9d84;padding-bottom:1px;
+}
+.epilogue-credit{
+  margin-top:54px;font-family:var(--font-ui);letter-spacing:2.5px;line-height:2.2;
+  color:rgba(247,234,210,.66);font-size:12.5px;
+}
+.epilogue-credit br+*{color:#e7c98d}
+
+@media(max-width:640px){
+  .timeline{padding-left:30px}
+  .timeline::before{left:8px}
+  .tl-year{position:static;width:auto;text-align:left;font-size:15px;margin-bottom:6px}
+  .tl-dot{left:-28px;top:6px}
+  .tl-head b{font-size:18px}
+}

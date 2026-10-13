@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>家书·回声 — 见字如面，听声如晤</title>
+<meta name="description" content="十二封红色家书的数字展馆：AI 朗读、逐句高亮、时代注解。CMIT「红色之旅 追梦铸魂」赛道参赛作品。">
+<meta property="og:title" content="家书·回声 — 见字如面，听声如晤">
+<meta property="og:description" content="十二封红色家书的数字展馆：AI 朗读、逐句高亮、时代注解。CMIT「红色之旅 追梦铸魂」赛道参赛作品。">
+<meta property="og:image" content="https://xianjiu0410.github.io/jiashu_01/images/aigc/hero-bg.jpg">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/extra.css">
+<link rel="stylesheet" href="css/visuals.css">
+<link rel="stylesheet" href="css/themes.css">
+</head>
+<body data-theme="red">
+
+<!-- 背景音乐开关 -->
+<button id="bgm-toggle" class="bgm-toggle" aria-label="背景音乐开关" title="背景音乐">♪</button>
+<div id="route-flash" aria-hidden="true"></div>
+
+<!-- 顶栏（阅读页内页显示，序厅隐藏） -->
+<header id="site-header" class="hidden">
+  <div class="header-inner">
+    <a href="#/" class="logo">家书<span class="dot">·</span>回声</a>
+    <nav class="nav">
+      <a href="#/letters" data-nav="letters">家书馆</a>
+      <a href="#/timeline" data-nav="timeline">时间轴</a>
+      <a href="#/wall" data-nav="wall">回信墙</a>
+      <a href="#/about" data-nav="about">关于</a>
+    </nav>
+    <button id="menu-btn" class="menu-btn" aria-label="菜单">☰</button>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav hidden">
+    <a href="#/letters">家书馆</a>
+    <a href="#/timeline">时间轴</a>
+    <a href="#/wall">回信墙</a>
+    <a href="#/about">关于</a>
+  </nav>
+</header>
+
+<!-- 视图容器 -->
+<main id="app">
+
+  <!-- 序厅 -->
+  <section id="view-landing" class="view">
+    <div class="landing-bg"></div>
+    <canvas id="fx-canvas"></canvas>
+    <div class="landing-side landing-side-l">一纸家书</div>
+    <div class="landing-side landing-side-r">百年回声</div>
+    <div class="landing-content">
+      <div class="landing-seal">聽</div>
+      <h1 class="landing-title">家书<span class="thin">·</span>回声</h1>
+      <p class="landing-quote">「见字如面，听声如晤」</p>
+      <p class="landing-sub"><b>1921 — 1949</b> · 十二封家书的声音</p>
+      <p class="landing-preface">十二位先烈，十二封家书，写于奔赴刑场与战场的路上。<br>听他们说完，再替他们看看今天。</p>
+      <button id="enter-btn" class="btn-primary">聆 听 · 进 入</button>
+      <div class="scroll-hint"><span class="arrow">↓</span> 也可下滑进入</div>
+    </div>
+    <div class="landing-foot">CMIT「红色之旅 追梦铸魂」专项赛道参赛作品</div>
+  </section>
+
+  <!-- 家书卡片墙 -->
+  <section id="view-letters" class="view hidden">
+    <div class="page-head">
+      <h2>十二封家书，十二种告别</h2>
+      <div class="filters" id="era-filters"></div>
+    </div>
+    <div class="tour-hint">点击卡片展开信笺聆听朗读 · 文中<span class="anno-demo">红色虚线词</span>可点击查看时代注解 · 顶栏可切换到时间轴</div>
+    <div class="letter-grid" id="letter-grid"></div>
+  </section>
+
+  <!-- 时间轴 -->
+  <section id="view-timeline" class="view hidden">
+    <div class="page-head">
+      <h2>一九二一 — 一九四九 · 家书年表</h2>
+      <p class="page-sub">十二封家书，按落笔年代排开的历史长卷。</p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <!-- 家书阅读页 -->
+  <section id="view-reader" class="view hidden">
+    <div class="reader-layout">
+      <div class="reader-main">
+        <div class="reader-meta">
+          <span class="no" id="reader-no"></span>
+          <h2 id="reader-title"></h2>
+          <p id="reader-date"></p>
+        </div>
+        <div class="letter-paper" id="letter-paper"></div>
+      </div>
+      <aside class="reader-side" id="reader-side"></aside>
+    </div>
+    <div class="reader-pager">
+      <a href="#" id="prev-letter" class="pager-link">← 上一封</a>
+      <a href="#/letters" class="pager-link pager-mid">返回卡片墙</a>
+      <a href="#" id="next-letter" class="pager-link">下一封 →</a>
+    </div>
+  </section>
+
+  <!-- 回信墙 -->
+  <section id="view-wall" class="view hidden">
+    <div class="page-head">
+      <h2>跨越时空，写一封回信</h2>
+      <p class="page-sub">你的回信保存在本机浏览器中，不会上传。</p>
+    </div>
+    <form id="wall-form" class="wall-form">
+      <div class="wall-row">
+        <select id="wall-to" required>
+          <option value="" disabled selected>写给哪位先烈？</option>
+        </select>
+        <input type="text" id="wall-sign" maxlength="12" placeholder="你的署名（可空）">
+      </div>
+      <textarea id="wall-text" maxlength="200" rows="4" placeholder="想对他说的话（限 200 字）" required></textarea>
+      <div class="wall-form-foot">
+        <span id="wall-count">0 / 200</span>
+        <button type="submit" class="btn-primary btn-small">寄 出 并 收 回 声</button>
+      </div>
+      <p id="wall-hint" class="wall-hint hidden"></p>
+    </form>
+    <!-- 回声回信区 -->
+    <div id="echo-box" class="echo-box hidden">
+      <div class="echo-head">
+        <span class="echo-seal">回</span>
+        <div>
+          <div class="echo-from" id="echo-from"></div>
+          <div class="echo-disclaimer">AI 模拟回声 · 非历史原件（依据先烈生平与文风创作，不代表先烈真实言论）</div>
+        </div>
+      </div>
+      <div class="echo-text" id="echo-text"></div>
+      <div class="echo-actions">
+        <button id="echo-again" class="btn-ghost btn-small">再收一封回声</button>
+        <button id="echo-save" class="btn-ghost btn-small">保存为图片</button>
+        <button id="echo-close" class="btn-ghost btn-small">贴上墙并关闭</button>
+      </div>
+    </div>
+    <div class="wall-grid" id="wall-grid"></div>
+  </section>
+
+  <!-- 尾声 -->
+  <section id="view-epilogue" class="view hidden">
+    <div class="epilogue-inner">
+      <h2>你，还记得哪一封？</h2>
+      <div class="epilogue-list" id="epilogue-list"></div>
+      <p class="epilogue-line">传承，是记住之后，再说给下一个人听。</p>
+      <div class="epilogue-qinghai" id="epilogue-qinghai"></div>
+      <div class="visit-box" id="visit-box"></div>
+      <div class="epilogue-actions">
+        <a href="#/letters" class="btn-primary">再读一遍</a>
+        <a href="#/wall" class="btn-ghost">去写回信</a>
+      </div>
+      <div class="epilogue-credit">
+        《家书·回声》创作团队<br>
+        参赛组长 马毅龙 · 指导教师 杨双双<br>
+        队员 满开逸 · 陈昊哲 · 姜烁 · 曾繁哲
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于 / 史料出处 -->
+  <section id="view-about" class="view hidden">
+    <div class="page-head"><h2>关于 · 史料出处</h2></div>
+    <div class="about-body">
+      <h3>作品简介</h3>
+      <p>《家书·回声》是 CMIT「红色之旅 追梦铸魂」专项赛道参赛作品。展馆收录 1921—1949 年间十二封革命家书，以语音朗读、逐句高亮与时代注解，让百年前的文字重新发声。</p>
+      <h3>策展前言</h3>
+      <p>1921—1949，革命者在最暗的夜里写信。写给母亲、妻子、孩子，写给"将来永远的幸福"。他们中的大多数，没能等到回音。本展馆收录十二封家书，以语音重读原文，以注解还原语境，以"回声"回应今天——既是数字展陈的一次实验，也是一封跨越百年的回信。展线从序厅开始，经家书馆、时间轴、回信墙，至尾声：请记住其中一封，再说给下一个人听。</p>
+      <h3>选篇说明</h3>
+      <ul>
+        <li><b>时序完整</b>——1921 至 1949 各历史阶段均有代表；</li>
+        <li><b>文体多样</b>——远行家书、狱中遗书、战场托孤、口述"无纸之信"皆备；</li>
+        <li><b>身份多元</b>——工人运动先驱、红军将领、抗日英烈、地下党员、女革命者；</li>
+        <li><b>地域记忆</b>——含青海红色记忆（熊厚发祁连山口述、循化红光清真寺屋脊的五角星）。</li>
+      </ul>
+      <h3>作品特色</h3>
+      <ul>
+        <li><b>会说话的家书</b>——AI 语音逐句朗读，读到哪里、亮到哪里，听与读同步。</li>
+        <li><b>点词见时代</b>——全文时代注解，点击红色虚线词，看懂百年前的语境。</li>
+        <li><b>跨时空的回声</b>——给先烈写一封回信，会收到依据其生平与文风创作的回声（明确标注为 AI 模拟，非历史原件）。</li>
+        <li><b>史料有态度</b>——十二封信逐条核校权威版本，存疑处如实标注两说并存、来源降级。</li>
+      </ul>
+      <h3>创作团队</h3>
+      <p><b>参赛组长</b>：马毅龙　<b>指导教师</b>：杨双双<br><b>队员</b>：满开逸、陈昊哲、姜烁、曾繁哲</p>
+      <h3>史料出处与参考文献</h3>
+      <ul id="about-sources"></ul>
+      <h3>先烈肖像来源</h3>
+      <table>
+        <thead><tr><th>编号</th><th>姓名</th><th>来源</th><th>版权说明</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td>张太雷</td><td class="src-a">中青在线《人民周刊》（新华社资料照片）</td><td>仅供非商业展览展示，已注明来源</td></tr>
+          <tr><td>02</td><td>陈毅安</td><td class="src-a">中华英烈网（退役军人事务部主管）</td><td>仅供非商业展览展示，已注明来源</td></tr>
+          <tr><td>03</td><td>夏明翰</td><td class="src-a">中国新闻网（中新社/新华社发）</td><td>仅供非商业展览展示，已注明来源</td></tr>
+          <tr><td>04</td><td>史砚芬</td><td class="src-a">光明网《光明日报》（资料照片）</td><td>仅供非商业展览展示，已注明来源</td></tr>
+          <tr><td>05</td><td>陈觉</td><td class="src-a">红网·湖南频道【英雄烈士谱】</td><td>并列标准像裁切，仅供展览展示</td></tr>
+          <tr><td>06</td><td>赵云霄</td><td class="src-a">红网·湖南频道【英雄烈士谱】</td><td>并列标准像裁切，仅供展览展示</td></tr>
+          <tr><td>07</td><td>董振堂</td><td class="src-a">新华网（新华社资料照片）</td><td>仅供非商业展览展示，已注明来源</td></tr>
+          <tr><td>08</td><td>刘伯坚</td><td class="src-a">中国互联网联合辟谣平台（转《光明日报》）</td><td>仅供非商业展览展示，已注明来源</td></tr>
+          <tr><td>09</td><td>赵一曼</td><td class="src-a">新华网（新华社发）</td><td>仅供非商业展览展示，已注明来源</td></tr>
+          <tr><td>10</td><td>熊厚发</td><td class="src-a">纪念馆展陈照片裁切（来源渠道降级，权威原图未见）</td><td>真实历史照片，已如实标注降级来源</td></tr>
+          <tr><td>11</td><td>左权</td><td class="src-a">央视网（转《光明日报》/新华社稿）</td><td>仅供非商业展览展示，已注明来源</td></tr>
+          <tr><td>12</td><td>江竹筠</td><td class="src-a">人民网/中国共产党新闻网（新华社发）</td><td>仅供非商业展览展示，已注明来源</td></tr>
+        </tbody>
+      </table>
+      <h3>版权与使用说明</h3>
+      <p>本作品为非商业教育展览。先烈肖像与信件释文均引自权威公开渠道并注明来源（见上表及各信"信件档案"），版权归原作者所有，依《著作权法》合理使用条款用于教学与展览展示。如权利人对使用方式有异议，请联系本团队，核实后立即处理。AIGC 纹理与印章素材由团队以腾讯 ima.copilot 生成，不涉及他人权利。</p>
+      <h3>AI 工具使用说明（摘要）</h3>
+      <p>本作品在创作中使用生成式人工智能工具辅助：①关键词注解与背景文案由大模型生成初稿，经人工逐条核对史实后固化为数据文件；②视觉素材中的纹理由 AIGC 辅助生成。信件原文均取自权威公开史料（出处见上），未由 AI 生成。运行时零 AI 接口依赖。</p>
+      <p><b>参赛组长：</b>马毅龙<br>
+      <b>指导教师：</b>杨双双<br>
+      <b>参赛队员：</b>满开逸、陈昊哲、姜烁、曾繁哲</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- 点词弹注浮层 -->
+<div id="anno-pop" class="anno-pop hidden">
+  <div class="anno-term" id="anno-term"></div>
+  <div class="anno-text" id="anno-text"></div>
+  <div class="anno-src" id="anno-src"></div>
+  <button class="anno-close" id="anno-close">✕</button>
+</div>
+
+<!-- 移动端侧栏抽屉遮罩 -->
+<div id="side-mask" class="side-mask hidden"></div>
+
+<script src="js/app.js"></script>
+<script src="js/fx.js"></script>
+</body>
+</html>
